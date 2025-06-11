@@ -1,28 +1,47 @@
 @startuml
+
+class Main {
+  +main(args: String[]): void
+}
+
 class Owner {
-  - name: String
-  - pet: Pet
-  + visitVet(vet: Vet)
+  -name: String
+  -pet: Pet
+  +visitVet(vet: Vet): void
 }
 
-class Owner::Pet {
-  - name: String
-  - age: int
-  + displayPetInfo()
+class Pet {
+  -name: String
+  -age: int
+  +displayPetInfo(): void
 }
 
-class Owner::PetHealthCard {
-  + printCard(ownerName: String)
+class PetHealthCard {
+  +printCard(ownerName: String): void
 }
 
 class Vet {
-  - name: String
-  - pets: List<Pet>
-  + addPet(pet: Pet)
-  + treatPet(pet: Pet)
+  -name: String
+  -pets: List<Pet>
+  +addPet(pet: Pet): void
+  +treatPet(pet: Pet): void
 }
 
-Owner "1" *-- "1" Pet : composition
-Vet "1" o-- "*" Pet : aggregation
+class HealthReport {
+  +print(): void
+}
+
+' --- Зв'язки ---
+Main --> Owner
+Main --> Vet
+Main ..> Pet : creates
+
+Owner *-- Pet : composition
+Vet o-- Pet : aggregation
 Owner --> Vet : association
+Owner ..> HealthReport : <<local class>>
+Owner ..> PetHealthCard : <<static nested>>
+
+Pet ..> Owner : inner class
+
 @enduml
