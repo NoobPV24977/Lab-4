@@ -1,0 +1,28 @@
+@startuml
+class Owner {
+  - name: String
+  - pet: Pet
+  + visitVet(vet: Vet)
+}
+
+class Owner::Pet {
+  - name: String
+  - age: int
+  + displayPetInfo()
+}
+
+class Owner::PetHealthCard {
+  + printCard(ownerName: String)
+}
+
+class Vet {
+  - name: String
+  - pets: List<Pet>
+  + addPet(pet: Pet)
+  + treatPet(pet: Pet)
+}
+
+Owner "1" *-- "1" Pet : composition
+Vet "1" o-- "*" Pet : aggregation
+Owner --> Vet : association
+@enduml
